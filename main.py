@@ -10,6 +10,7 @@ import tkinter as tk
 ky.add_hotkey("alt + n", lambda: translate())
 
 def translate():
+    time.sleep(.3)
     pya.tripleClick(pya.position())
     time.sleep(.1)
 
@@ -25,10 +26,11 @@ def window(val):
     value = tk.Label(text=val)
     value.pack()
 
+    window.overrideredirect(True)
     window.wm_attributes("-topmost", 1)
-    window.geometry(f"{len(val)*6}x50+{(pya.position().x-150)}+{(pya.position().y)-150}")
+    window.geometry(f"{(len(val)*6)+15}x30+{(pya.position().x-150)}+{(pya.position().y)-40}")
     window.title("Translation -> EN")
-    window.after(15000, lambda: window.destroy())
+    window.after(5000, lambda: window.destroy())
     window.mainloop()
 
 ky.wait("ctrl + alt + shift + esc")
