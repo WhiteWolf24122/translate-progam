@@ -59,6 +59,16 @@ def tras(val, lang_long):
     value = ts.google(val, to_language=parsed[lang_long])
     pyperclip.copy(value)
 
+
+    w = tk.Tk()
+    lab = tk.Label(w, text="Translated and Copyed to clipbaord").pack()
+    w.overrideredirect(True)
+    w.wm_attributes("-topmost", 1)
+    w.geometry(f"200x50+{(pya.position().x-150)}+{(pya.position().y)-40}")
+    w.title(f"Translation -> {lang_long}")
+    w.after(1500, lambda: w.destroy())
+    w.mainloop()
+
 def window(val):
     window = tk.Tk()
     value = tk.Label(text=val)
