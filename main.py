@@ -4,10 +4,17 @@ import pyautogui as pya
 import pyperclip
 import time
 import tkinter as tk
+import json
 
+languages = []
+with open("langs.json") as file:
+    parsed = json.loads(file.read())
 
+for i in parsed:
+    languages.append(i)
 
 ky.add_hotkey("alt + n", lambda: translate())
+ky.add_hotkey("alt + t", lambda: trans_to())
 
 def translate():
     time.sleep(.3)
@@ -20,6 +27,37 @@ def translate():
     val = pyperclip.paste()
     val = val.replace("\n", "")
     window(ts.google(val))
+
+
+def trans_to():
+    window = tk.Tk()
+
+    clicked = tk.StringVar()
+    clicked.set("English")
+
+    drop = tk.OptionMenu(window, clicked, *languages)
+    drop.pack()
+
+    text = tk.Text(width=200, height=3)
+    text.pack()
+
+    button = tk.Button(window, text="Translate", command= lambda: tras(text.get("1.0", tk.END), clicked.get())).pack()
+    button = tk.Button(window, text="Close", command= lambda: window.destroy()).pack()
+
+    window.overrideredirect(True)
+    window.wm_attributes("-topmost", 1)
+    window.geometry(f"300x150+{(pya.position().x-150)}+{(pya.position().y)-40}")
+    window.title(f"Translation -> {clicked.get()}")
+    window.mainloop()
+
+def tras(val, lang_long):
+    val = val.replace("\n", "")
+
+    with open("langs.json") as file:
+        parsed = json.loads(file.read())
+    
+    value = ts.google(val, to_language=parsed[lang_long])
+    pyperclip.copy(value)
 
 def window(val):
     window = tk.Tk()
