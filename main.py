@@ -13,13 +13,16 @@ with open("langs.json") as file:
 for i in parsed:
     languages.append(i)
 
-ky.add_hotkey("alt + n", lambda: translate())
+ky.add_hotkey("alt + n", lambda: translate(True))
+ky.add_hotkey("ctrl + alt + n", lambda: translate(False))
 ky.add_hotkey("alt + t", lambda: trans_to())
 
-def translate():
+def translate(with_click):
+    if with_click:
+        time.sleep(.3)
+        pya.tripleClick(pya.position())
+    
     time.sleep(.3)
-    pya.tripleClick(pya.position())
-    time.sleep(.1)
 
     ky.press_and_release("ctrl + c")
     time.sleep(.1)
