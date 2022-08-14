@@ -26,7 +26,7 @@ def window(val):
     value.pack()
 
     window.wm_attributes("-topmost", 1)
-    window.geometry(f"{len(val)*7}x50+{(pya.position().x-150)}+{(pya.position().y)-150}")
+    window.geometry(f"{len(val)*6}x50+{(pya.position().x-150)}+{(pya.position().y)-150}")
     window.title("Translation -> EN")
     window.after(15000, lambda: window.destroy())
     window.mainloop()
